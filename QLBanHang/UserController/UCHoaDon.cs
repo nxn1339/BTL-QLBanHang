@@ -26,6 +26,7 @@ namespace QLBanHang
             //Mặc định Enabled các group box không cho thao tác khi chưa chọn chức năng
             gbNhapHD.Enabled = false;
             gbNhapCTHD.Enabled = false;
+            gbNhapKH.Enabled = false;
             txtThanhTien.Enabled = false;
             txtDgBan.Enabled = false;
 
@@ -33,10 +34,11 @@ namespace QLBanHang
             //Gọi đến các hàm hiển thị và load
             LoadHoaDon("HienThiHoaDon");
             LoadCTHoaDon("HienThiCTHoaDon");
+            LoadKhachHang("HienThiKH");
             LoadDuLieuCBMaKH();
             LoadDuLieuCB_MaHD();
             LoadDuLieuCB_MaMH();
-            kn.DongKetNoi();          
+            kn.DongKetNoi();
         }
 
         //======================================Hóa Đơn=====================================================
@@ -641,6 +643,238 @@ namespace QLBanHang
             dap.Fill(ds);
             //Gắn dữ liệu từ DataSet lên DataGridView
             dgvCTHoaDon.DataSource = ds.Tables[0];
+        }
+
+        //==================================End CTHoaDon=============================
+
+        //==================================Khách Hàng================================
+
+        private void LoadKhachHang(string sql)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandText = sql;
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            sqlCmd.Connection = kn.sqlCon;
+
+            DataSet ds = new DataSet();
+
+            SqlDataAdapter dap = new SqlDataAdapter(sqlCmd);
+            dap.Fill(ds);
+            //Gắn dữ liệu vào datagirdView
+            dgvKhachHang.DataSource = ds.Tables[0];
+        }
+
+        private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //bắt lỗi nếu bấm ra ngoài thì cũng không bị đóng chương trình
+            try
+            {
+                //Click vào dòng nào ở datagirdView hóa đơn thì cho dữa liệu vào các text box tương ứng
+                dgvKhachHang.CurrentRow.Selected = true;
+                txtMaKH.Text = dgvKhachHang.Rows[e.RowIndex].Cells["MaKH"].FormattedValue.ToString();
+                txtTenKH.Text = dgvKhachHang.Rows[e.RowIndex].Cells["TenKH"].FormattedValue.ToString();
+                txtDiaChi.Text = dgvKhachHang.Rows[e.RowIndex].Cells["DiaChi"].FormattedValue.ToString();
+                txtSDT.Text = dgvKhachHang.Rows[e.RowIndex].Cells["SDT"].FormattedValue.ToString();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void KhachHang(string sql)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            sqlCmd.CommandText = sql;
+
+            SqlParameter parMaKH = new SqlParameter("@MaKH", SqlDbType.Char);
+            SqlParameter parTenKH = new SqlParameter("@TenKH", SqlDbType.NVarChar);
+            SqlParameter parDiaChi = new SqlParameter("@DiaChi", SqlDbType.NVarChar);
+            SqlParameter parSDT = new SqlParameter("@SDT", SqlDbType.VarChar);
+
+            //Lấy Dữ Liệu Từ TextBox Đưa Vào Parameter
+            parMaKH.Value = txtMaKH.Text.Trim();
+            parTenKH.Value = txtTenKH.Text.Trim();
+            parDiaChi.Value = txtDiaChi.Text.Trim();
+            parSDT.Value = txtSDT.Text.Trim();
+
+
+            //Thêm Parameter vào Comman
+            sqlCmd.Parameters.Add(parMaKH);
+            sqlCmd.Parameters.Add(parTenKH);
+            sqlCmd.Parameters.Add(parDiaChi);
+            sqlCmd.Parameters.Add(parSDT);
+
+
+            //Gắn Liên Kết SQL
+            sqlCmd.Connection = kn.sqlCon;
+            //Thực Thi
+            sqlCmd.ExecuteNonQuery();
+        }
+
+        private void XoaKhachHang(string sql)
+        {
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            sqlCmd.CommandText = sql;
+
+            SqlParameter parMaKH = new SqlParameter("@MaKH", SqlDbType.Char);
+
+            //Lấy Dữ Liệu Từ TextBox Đưa Vào Parameter
+            parMaKH.Value = txtMaKH.Text.Trim();
+
+            //Thêm Parameter vào Comman
+            sqlCmd.Parameters.Add(parMaKH);
+
+            //Gắn Liên Kết SQL
+            sqlCmd.Connection = kn.sqlCon;
+            //Thực Thi
+            int kp = sqlCmd.ExecuteNonQuery();
+            if (kp > 0)
+            {
+                //báo thành công
+                MessageBox.Show("Xóa Khách Hàng Thành Công !");
+            }
+            else
+            {
+                //báo lỗi
+                MessageBox.Show("Lỗi Xóa Khách Hàng Không Thành Công !");
+            }
+        }
+        private void btnThemKH_Click(object sender, EventArgs e)
+        {
+            //mở groupBox nhập
+            gbNhapKH.Enabled = true;
+            //đổi trạng thái chức năng sang thêm khách hàng
+            chucNang = "addKH";
+            //mở textBox mã khách hàng
+            txtMaKH.Enabled = true;
+        }
+
+        private void btnSuaKH_Click(object sender, EventArgs e)
+        {
+            //mở groupBox nhập
+            gbNhapKH.Enabled = true;
+            //đổi trạng thái chức năng sang thêm khách hàng
+            chucNang = "updateKH";
+            //đóng textBox mã khách hàng không cho sửa mã khách hàng
+            txtMaKH.Enabled = false;
+        }
+
+        private void btnLamMoiKH_Click(object sender, EventArgs e)
+        {
+            kn.MoKetNoi();
+            LoadKhachHang("HienThiKH");
+            kn.DongKetNoi();
+        }
+
+        private void btnXoaKH_Click(object sender, EventArgs e)
+        {
+            kn.MoKetNoi();
+            //Nếu chọn yes thì
+            if (MessageBox.Show("Bạn Có Muốn Xóa Khách Hàng Có Mã KH là " + txtMaKH.Text, "Xóa Khách Hàng", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                //xóa khách hàng
+                XoaKhachHang("XoaKH");
+                //load lại dữ liệu 
+                LoadKhachHang("HienThiKH");
+            }
+            kn.DongKetNoi();
+        }
+
+        private void btnLuuKH_Click(object sender, EventArgs e)
+        {
+            kn.MoKetNoi();
+            if (chucNang == "addKH") // nếu là chức năng thêm khách hàng thì
+            {
+                try
+                {
+                    //Thêm khách hàng
+                    KhachHang("ThemKH");
+                    //đóng nhập
+                    gbNhapKH.Enabled = false;
+                    //báo thành công
+                    MessageBox.Show("Thêm Thành Công");
+                    //Load lại dữ liệu
+                    LoadKhachHang("HienThiKH");
+                }
+                catch
+                {
+                    //báo lỗi
+                    MessageBox.Show("Lỗi Thêm Không Thành Công");
+                }
+            }
+            else if (chucNang == "updateKH")
+            {
+                try
+                {
+                    //Sửa khách hàng
+                    KhachHang("SuaKH");
+                    //Load lại dữ liệu
+                    LoadKhachHang("HienThiKH");
+                    //đóng nhập
+                    gbNhapKH.Enabled = false;
+                    //báo thành công
+                    MessageBox.Show("Sửa Thành Công");
+                }
+                catch
+                {
+                    //báo lỗi
+                    MessageBox.Show("Lỗi Sửa Không Thành Công");
+                }
+            }
+            else
+            {
+                //Nếu đang chọn chức năng ở tabContro khác báo chọn lại chức năng
+                MessageBox.Show("Vui Lòng Chọn Chức Năng !");
+            }
+            kn.DongKetNoi();
+        }
+
+        private void btnHuyKH_Click(object sender, EventArgs e)
+        {
+            //đóng nhập
+            gbNhapKH.Enabled = false;
+        }
+
+        private void btnTimKiemKH_Click(object sender, EventArgs e)
+        {
+            string sqlTimKiem = "select * from KHACHHANG";
+            string dk = "";
+            //Mã KH Khác rỗng
+            if (txtTK_MaKH.Text.Trim() != "")
+            {
+                dk += " MaKH like '%" + txtTK_MaKH.Text + "%'";
+            }
+            //Tên KH khác rỗng và Mã KH khác rỗng
+            if (txtTK_TenKH.Text.Trim() != "" && dk != "")
+            {
+                dk += " AND TenKH like N'%" + txtTK_TenKH.Text + "%'";
+            }
+            //Tên KH khác rỗng, Mã KH rỗng
+            if (txtTK_TenKH.Text.Trim() != "" && dk == "")
+            {
+                dk += " TenKH like N'%" + txtTK_TenKH.Text + "%'";
+            }
+            //Nối các điều kiện
+            if (dk != "")
+            {
+                sqlTimKiem += " WHERE" + dk;
+            }
+            LoadDuLieuTK_KH(sqlTimKiem);
+        }
+
+        private void LoadDuLieuTK_KH(string sql)
+        {
+            //tạo đối tượng DataSet
+            DataSet ds = new DataSet();
+            //Khởi tạo đối tượng DataAdapter và cung cấp vào câu lệnh SQL và đối tượng Connection
+            SqlDataAdapter dap = new SqlDataAdapter(sql, kn.sqlCon);
+            //Dùng phương thức Fill của DataAdapter để đổ dữ liệu từ DataSource tới DataSet
+            dap.Fill(ds);
+            //Gắn dữ liệu từ DataSet lên DataGridView
+            dgvKhachHang.DataSource = ds.Tables[0];
         }
     }
 }

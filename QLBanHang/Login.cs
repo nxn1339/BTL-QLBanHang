@@ -172,5 +172,11 @@ namespace QLBanHang
                 txt_password.Focus();   
             }
         }
+
+        //Hàm này tránh ứng dụng chạy ngầm
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }

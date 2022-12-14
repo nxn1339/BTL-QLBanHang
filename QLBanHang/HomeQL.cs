@@ -273,5 +273,11 @@ namespace QLBanHang
                 Application.Exit();
             }
         }
+
+        //Hàm này tránh ứng dụng chạy ngầm
+        private void HomeQL_FormClosing(object sender, FormClosingEventArgs e)
+        {           
+            System.Windows.Forms.Application.Exit();
+        }
     }
 }

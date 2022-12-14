@@ -537,6 +537,7 @@
             this.Name = "HomeQL";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HomeQL_FormClosing);
             this.Load += new System.EventHandler(this.HomeQL_Load);
             this.panelMenu.ResumeLayout(false);
             this.plMenuSetting.ResumeLayout(false);

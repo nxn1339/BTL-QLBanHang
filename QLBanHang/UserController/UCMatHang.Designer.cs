@@ -89,11 +89,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnLoadTK_MH = new System.Windows.Forms.Button();
             this.lvTopMH = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnLoadTK_MH = new System.Windows.Forms.Button();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -122,9 +122,9 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
@@ -864,6 +864,23 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Top Mặt Hàng Bán Chạy";
             // 
+            // btnLoadTK_MH
+            // 
+            this.btnLoadTK_MH.BackColor = System.Drawing.Color.LightCyan;
+            this.btnLoadTK_MH.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnLoadTK_MH.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoadTK_MH.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(22)))), ((int)(((byte)(39)))));
+            this.btnLoadTK_MH.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadTK_MH.Image")));
+            this.btnLoadTK_MH.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadTK_MH.Location = new System.Drawing.Point(116, 396);
+            this.btnLoadTK_MH.Name = "btnLoadTK_MH";
+            this.btnLoadTK_MH.Size = new System.Drawing.Size(99, 34);
+            this.btnLoadTK_MH.TabIndex = 11;
+            this.btnLoadTK_MH.Text = "Làm Mới";
+            this.btnLoadTK_MH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLoadTK_MH.UseVisualStyleBackColor = false;
+            this.btnLoadTK_MH.Click += new System.EventHandler(this.btnLoadTK_MH_Click);
+            // 
             // lvTopMH
             // 
             this.lvTopMH.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -896,23 +913,6 @@
             // 
             this.columnHeader4.Text = "SL Bán";
             this.columnHeader4.Width = 100;
-            // 
-            // btnLoadTK_MH
-            // 
-            this.btnLoadTK_MH.BackColor = System.Drawing.Color.LightCyan;
-            this.btnLoadTK_MH.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLoadTK_MH.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoadTK_MH.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(22)))), ((int)(((byte)(39)))));
-            this.btnLoadTK_MH.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadTK_MH.Image")));
-            this.btnLoadTK_MH.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLoadTK_MH.Location = new System.Drawing.Point(116, 396);
-            this.btnLoadTK_MH.Name = "btnLoadTK_MH";
-            this.btnLoadTK_MH.Size = new System.Drawing.Size(99, 34);
-            this.btnLoadTK_MH.TabIndex = 11;
-            this.btnLoadTK_MH.Text = "Làm Mới";
-            this.btnLoadTK_MH.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLoadTK_MH.UseVisualStyleBackColor = false;
-            this.btnLoadTK_MH.Click += new System.EventHandler(this.btnLoadTK_MH_Click);
             // 
             // UCMatHang
             // 
